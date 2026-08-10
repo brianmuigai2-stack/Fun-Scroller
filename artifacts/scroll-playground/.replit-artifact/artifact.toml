@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Scroll Playground"
+description = "A playful interactive 3D web experience made for people who want to scroll, explore, and discover delightful visual surprises with no agenda."
+version = "1.0.0"
+id = "artifacts/scroll-playground"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25068
+
+[services.development]
+run = "pnpm --filter @workspace/scroll-playground run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/scroll-playground", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/scroll-playground/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25068"
+BASE_PATH = "/"
